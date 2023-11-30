@@ -15,3 +15,11 @@
     width: 350px;
     margin-right: 20px;
 }
+
+.valid-text {
+    display: none;
+}
+
+.active {
+    display: block;
+}

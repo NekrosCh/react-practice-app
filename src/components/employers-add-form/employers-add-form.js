@@ -7,8 +7,9 @@ class EmployersAddForm extends  Component {
         super(props);
         this.state = {
             name: '',
-            salary: ''
-        }
+            salary: '',
+            valid: true
+        };
     }
     onValueChange = (e) => {
         this.setState({
@@ -21,13 +22,22 @@ class EmployersAddForm extends  Component {
             this.props.addNew(this.state.name, this.state.salary);
             this.setState({
                 name: '',
-                salary: ''
+                salary: '',
+                valid: true
             })
-        } 
+        } else {
+            this.setState({
+                valid: false
+            })
+        }
     }
 
     render() {
         const {name, salary} = this.state;
+        let validClassName = 'valid-text';
+        if(!this.state.valid) {
+            validClassName += ' active';
+        }
         return (
             <div className="app-add-form">
                 <h3>Добавьте нового сотрудника</h3>
@@ -50,6 +60,7 @@ class EmployersAddForm extends  Component {
                     <button type="submit"
                             className="btn btn-outline-light">Добавить</button>
                 </form>
+                <span className={validClassName}>Введите больше 3 букв в имя или добавьте зп</span>
             </div>        
         )
     }
