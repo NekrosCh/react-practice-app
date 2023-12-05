@@ -1,64 +1,31 @@
-import { Component } from 'react';
 import './app-filter.css';
 
-class AppFilter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      promotion: false,
-      bigSalary: false
-    }
-  }
-  onFilter = (e) => {
-    let state;
-    if(e.currentTarget.getAttribute('data-toggle') === 'promotion') {
-      state = {
-        promotion: true,
-        bigSalary: false
-      }
-    }
-    if(e.currentTarget.getAttribute('data-toggle') === 'bigSalary') {
-      state = {
-        promotion: false,
-        bigSalary: true
-      }
-    }
-    if(e.currentTarget.getAttribute('data-toggle') === 'all') {
-      state = {
-        promotion: false,
-        bigSalary: false
-      }
-    }
-    this.setState(state)
-    this.props.onFilter(state)
-  }
-  render() {
+const AppFilter = (props) => {
+  const buttonsData = [
+    {name: 'all', label: 'Все сотрудники'},
+    {name: 'promotion', label: 'На повышение'},
+    {name: 'moreThen1000', label: 'З/П больше 1000$'}
+  ];
+
+  const buttons = buttonsData.map(({name, label}) => {
+    const active = props.filter === name;
+    const clazz = active ? 'btn-light' : 'btn-outline-light';
     return (
-      <div className="btn-group">
-        <button 
-            className="btn btn-light"
-            type="button"
-            data-toggle="all"
-            onClick={this.onFilter}>
-                Все сотрудники
-        </button>
-        <button 
-            className="btn btn-outline-light"
-            type="button"
-            data-toggle="promotion"
-            onClick={this.onFilter}>
-                На повышение
-        </button>
-        <button 
-            className="btn btn-outline-light"
-            type="button"
-            data-toggle="bigSalary"
-            onClick={this.onFilter}>
-                З/П больше 1000$
-        </button>
-      </div>  
-    );
-  }
+    <button 
+      className={`btn ${clazz}`}
+      type="button"
+      key={name}
+      onClick={() => props.onFilterSelect(name)}>
+          {label}
+    </button>
+    )
+  })
+  
+  return (
+    <div className="btn-group">
+      {buttons}
+    </div>  
+  );
 }
 
 export default AppFilter;
